@@ -2,6 +2,6 @@
 
 ## Installation
 ```
-curl -fsSL https://raw.githubusercontent.com/wllnut/dwm/main/install.sh | sudo bash
+curl -fsSL https://raw.githubusercontent.com/wllnut/dwm/main/install.sh | bash
 
 ```
