@@ -61,7 +61,7 @@ for file in .xinitrc .zshrc .zsh_history; do
 done
 
 copy_file_if_exists "dwm/.oh-my-zsh" "~/.oh-my-zsh"
-copy_file_if_exists "dwm/.config" "~/.config"
+cp -rp ~/dwm/{dwm/,dmenu,slstatus,slock} ~/.config/Suckless
 
 # Copy wallpaper if it exists
 copy_file_if_exists "dwm/wallpaper" "~/Media/pictures/.wallpaper"
