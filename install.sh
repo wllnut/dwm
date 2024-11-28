@@ -1,20 +1,20 @@
 #!/bin/bash
 
-# Ensure the script is running with sudo privileges
+# Ensure the script is running as root for system-wide tasks
 if [[ $(id -u) -ne 0 ]]; then
-  echo "Please run this script as root or with sudo privileges."
-  exit 1
+  echo "Please run this script as root to install system-wide packages."
 fi
 
-# Update system and install necessary packages
+# Update the system and install necessary packages
 echo "Updating system and installing necessary packages (git, flatpak)..."
-pacman -Syu --noconfirm git flatpak
+sudo pacman -Syu --noconfirm
+sudo pacman -S --noconfirm git flatpak
 
 # Setup home directory structure
 echo "Setting up home directory..."
-mkdir -p ~/Code ~/Desktop ~/Documents ~/Downloads ~/Media/{music,pictures,video}
+mkdir -p ~/Code ~/Desktop ~/Documents ~/Downloads ~/Media/{music,pictures,video} ~/.config/Suckless
 
-# Clone the dwm repository
+# Clone the dwm repository into the user's home directory
 echo "Cloning dotfile repository..."
 cd ~
 git clone https://github.com/wllnut/dwm
@@ -23,13 +23,12 @@ cd dwm
 # Install packages from pacman_packages.list if it exists
 if [ -f pacman_packages.list ]; then
   echo "Installing packages from pacman_packages.list..."
-  pacman -S --noconfirm - < pacman_packages.list
+  sudo pacman -S --noconfirm - < pacman_packages.list
 else
   echo "pacman_packages.list not found, skipping pacman package installation."
 fi
 
 # Install yay from the AUR if yay is not already installed
-cd ~
 echo "Installing yay from the AUR..."
 git clone https://aur.archlinux.org/yay.git
 cd yay
@@ -54,7 +53,7 @@ copy_file_if_exists() {
   fi
 }
 
-# Copy configuration files
+# Copy configuration files to the user's home directory
 echo "Copying configuration files..."
 for file in .xinitrc .zshrc .zsh_history; do
   [ ! -f ~/$file ] && cp dwm/$file ~/$file
@@ -70,7 +69,7 @@ copy_file_if_exists "dwm/wallpaper" "~/Media/pictures/.wallpaper"
 echo "Copying code files..."
 cp -r dwm/Code ~/Code
 
-# Install suckless programs
+# Install suckless programs that require root permissions to install
 echo "Installing Suckless programs..."
 cd ~/.config/Suckless/dwm && sudo make clean install
 cd ~/.config/Suckless/dmenu && sudo make clean install
