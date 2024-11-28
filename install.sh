@@ -1,11 +1,8 @@
 #!/bin/bash
 
-# Ensure the script is running as root for system-wide tasks
-if [[ $(id -u) -ne 0 ]]; then
-  echo "Please run this script as root to install system-wide packages."
-fi
-
-# Update the system and install necessary packages
+# Ensure the script is running with sudo privileges when needed
+echo "Running script as user..."
+# Updating the system and installing necessary packages (requires root privileges)
 echo "Updating system and installing necessary packages (git, flatpak)..."
 sudo pacman -Syu --noconfirm
 sudo pacman -S --noconfirm git flatpak
@@ -29,12 +26,16 @@ else
 fi
 
 # Install yay from the AUR if yay is not already installed
-echo "Installing yay from the AUR..."
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si --noconfirm
-cd ~
-rm -rf yay
+if ! command -v yay &>/dev/null; then
+  echo "Installing yay from the AUR..."
+  git clone https://aur.archlinux.org/yay.git
+  cd yay
+  makepkg -si --noconfirm
+  cd ~
+  rm -rf yay
+else
+  echo "yay is already installed."
+fi
 
 # Install Flatpak packages from flatpak_packages.list if it exists
 if [ -f flatpak_packages.list ]; then
