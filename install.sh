@@ -5,7 +5,7 @@ echo "Running script as user..."
 # Updating the system and installing necessary packages (requires root privileges)
 echo "Updating system and installing necessary packages (git, flatpak)..."
 sudo pacman -Syu --noconfirm
-sudo pacman -S --noconfirm git flatpak
+sudo pacman -S --noconfirm git flatpak zsh
 
 # Setup home directory structure
 echo "Setting up home directory..."
@@ -92,5 +92,11 @@ if [ -f ~/Media/pictures/.wallpaper/wallpaper.png ]; then
 else
   echo "Wallpaper not found, skipping wallpaper setting."
 fi
+
+echo "Installing Oh-My-Zsh..."
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+echo "Setting Zsh as the default shell..."
+chsh -s $(which zsh)
 
 echo "Installation complete. You may want to manually start X using 'startx' or reboot your system."
