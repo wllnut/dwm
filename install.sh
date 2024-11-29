@@ -54,17 +54,25 @@ copy_file_if_exists() {
   fi
 }
 
+copy_dir_if_exists() {
+  if [ -f "$1" ]; then
+    cp -r "$1" "$2"
+  else
+    echo "$1 not found, skipping."
+  fi
+}
+
 # Copy configuration files to the user's home directory
 echo "Copying configuration files..."
 for file in .xinitrc .zshrc .zsh_history; do
   [ ! -f ~/$file ] && cp dwm/$file ~/$file
 done
 
-copy_file_if_exists "dwm/.oh-my-zsh" "~/.oh-my-zsh"
+copy_dir_if_exists "dwm/.oh-my-zsh" "~/.oh-my-zsh"
 cp -rp ~/dwm/{dwm/,dmenu,slstatus,slock} ~/.config/Suckless
 
 # Copy wallpaper if it exists
-copy_file_if_exists "dwm/wallpaper" "~/Media/pictures/.wallpaper"
+copy_dir_if_exists "dwm/wallpaper" "~/Media/pictures/.wallpaper"
 
 # Copy code files
 echo "Copying code files..."
