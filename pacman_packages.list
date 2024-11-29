@@ -7,7 +7,6 @@ base-devel
 bottom
 btop
 btrfs-progs
-cava
 cmatrix
 dunst
 efibootmgr
@@ -40,9 +39,6 @@ pipewire-pulse
 profile-sync-daemon
 python-pip
 python-pywal
-python-pywalfox
-r2modman
-rar
 ripgrep
 thunar
 torbrowser-launcher
