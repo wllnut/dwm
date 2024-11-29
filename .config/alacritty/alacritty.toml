@@ -1,0 +1,12 @@
+[font]
+size = 13.0
+
+[scrolling]
+multiplier = 6
+
+[cursor]
+style = { shape = "Beam", blinking = "Always" }
+unfocused_hollow = false
+
+[mouse]
+hide_when_typing = true
