@@ -18,33 +18,21 @@ git clone https://github.com/wllnut/dwm
 cd dwm
 
 # Install packages from pacman_packages.list if it exists
-if [ -f pacman_packages.list ]; then
   echo "Installing packages from pacman_packages.list..."
   sudo pacman -S --noconfirm - < pacman_packages.list
-else
-  echo "pacman_packages.list not found, skipping pacman package installation."
-fi
 
 # Install yay from the AUR if yay is not already installed
-if ! command -v yay &>/dev/null; then
   echo "Installing yay from the AUR..."
   git clone https://aur.archlinux.org/yay.git
   cd yay
   makepkg -si --noconfirm
   cd ~
   rm -rf yay
-else
-  echo "yay is already installed."
-fi
 
 # Install Flatpak packages from flatpak_packages.list if it exists
-if [ -f flatpak_packages.list ]; then
   echo "Installing Flatpak packages from flatpak_packages.list..."
   flatpak install -y < flatpak_packages.list
-else
-  echo "flatpak_packages.list not found, skipping Flatpak package installation."
-fi
-
+  
 # Function to copy files if they exist
 copy_file_if_exists() {
   if [ -f "$1" ]; then
@@ -72,7 +60,7 @@ copy_dir_if_exists "dwm/.oh-my-zsh" "~/.oh-my-zsh"
 cp -rp ~/dwm/{dwm/,dmenu,slstatus,slock} ~/.config/Suckless
 
 # Copy wallpaper if it exists
-copy_dir_if_exists "dwm/wallpaper" "~/Media/pictures/.wallpaper"
+cp -r ~/dwm/wallpaper ~/Media/pictures/.wallpaper
 
 # Copy code files
 echo "Copying code files..."
